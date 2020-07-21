@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crdockerdemo1-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crdockerdemo1
+  template:
+    metadata:
+      labels:
+        app: crdockerdemo1
+    spec:
+      containers:
+      - name: crdockerdemo1
+        image: kubernetessample1.azurecr.io/kubernetessample1repos:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: dsconfigsn
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crdockerdemo1
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: Dockersampleconfig
+
